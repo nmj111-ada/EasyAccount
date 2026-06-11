@@ -184,13 +184,25 @@ public class AddTransactionFragment extends Fragment {
         void setData(List<Category> d) { data = d != null ? d : new ArrayList<>(); notifyDataSetChanged(); }
 
         @NonNull @Override public VH onCreateViewHolder(@NonNull ViewGroup p, int wt) {
+            // FrameLayout wrapper for ripple
+            android.widget.FrameLayout wrap = new android.widget.FrameLayout(p.getContext());
+            int size = p.getWidth() / 4 - 40;
+            wrap.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+            wrap.setPadding(12, 16, 12, 16);
+            wrap.setClickable(true);
+            wrap.setFocusable(true);
+            int[] attrs = {android.R.attr.selectableItemBackground};
+            android.content.res.TypedArray ta = p.getContext().obtainStyledAttributes(attrs);
+            wrap.setForeground(ta.getDrawable(0));
+            ta.recycle();
+
             TextView tv = new TextView(p.getContext());
-            int size = p.getWidth() / 4 - 32;
-            tv.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, size));
+            tv.setLayoutParams(new android.widget.FrameLayout.LayoutParams(size, size, Gravity.CENTER));
             tv.setGravity(Gravity.CENTER);
-            tv.setTextSize(14f);
-            tv.setPadding(8, 8, 8, 8);
-            return new VH(tv);
+            tv.setTextSize(13f);
+            tv.setPadding(12, 12, 12, 12);
+            wrap.addView(tv);
+            return new VH(wrap, tv);
         }
 
         @Override public void onBindViewHolder(@NonNull VH h, int pos) {
@@ -199,7 +211,6 @@ public class AddTransactionFragment extends Fragment {
             int bgColor;
             try { bgColor = Color.parseColor(colorStr); }
             catch (Exception e) { bgColor = Color.parseColor("#E0E0E0"); }
-            // 半透明背景
             int alpha = (bgColor & 0x00FFFFFF) | 0x3F000000;
             GradientDrawable bg = new GradientDrawable();
             bg.setCornerRadius(24);
@@ -210,14 +221,14 @@ public class AddTransactionFragment extends Fragment {
             try { txtColor = Color.parseColor(colorStr); }
             catch (Exception e) { txtColor = Color.GRAY; }
             h.tv.setTextColor(txtColor);
-            h.tv.setOnClickListener(v -> click.onClick(cat));
+            h.itemView.setOnClickListener(v -> click.onClick(cat));
         }
 
         @Override public int getItemCount() { return data.size(); }
 
         static class VH extends RecyclerView.ViewHolder {
             TextView tv;
-            VH(View v) { super(v); tv = (TextView) v; }
+            VH(View v, TextView tv) { super(v); this.tv = tv; }
         }
     }
 
