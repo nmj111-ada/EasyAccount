@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- 暗色主题：柠檬黄在深色背景上依然明亮，文字用浅色 -->
+    <color name="primary">#FDD835</color>
+    <color name="primary_variant">#F9A825</color>
+    <color name="on_primary">#1C1B1F</color>
+    <color name="secondary">#AED581</color>
+    <color name="background">#121212</color>
+    <color name="surface">#1E1E1E</color>
+    <color name="on_surface">#E0E0E0</color>
+    <color name="error">#CF6679</color>
+    <color name="income_color">#81C784</color>
+    <color name="expense_color">#EF9A9A</color>
+    <color name="text_primary">#E0E0E0</color>
+    <color name="text_secondary">#9E9E9E</color>
+    <color name="divider">#333333</color>
+
+    <color name="cat_food">#FF8A65</color>
+    <color name="cat_transport">#64B5F6</color>
+    <color name="cat_shopping">#CE93D8</color>
+    <color name="cat_entertainment">#4DB6AC</color>
+    <color name="cat_housing">#7986CB</color>
+    <color name="cat_health">#EF5350</color>
+    <color name="cat_education">#81C784</color>
+    <color name="cat_salary">#FFB74D</color>
+    <color name="cat_other">#90A4AE</color>
+</resources>
