@@ -40,6 +40,17 @@ import java.util.Map;
 
 public class StatsFragment extends Fragment {
 
+    // ── Pie constants ──
+    private static final float PIE_L = 30f, PIE_T = 10f, PIE_R = 30f, PIE_B = 10f;
+    private static final float HOLE_R = 50f, TRANS_R = 54f;
+    private static final float CENTER_SZ = 15f, MIN_OFF = 40f;
+    private static final float LABEL_SZ = 12f, SLICE_GAP = 3f, MIN_PCT = 3f;
+    private static final float LINE_W = 1f, LINE_L1 = 0.7f, LINE_L2 = 0.5f;
+    private static final float LINE_OFF = 80f;
+    private static final int PIE_ANIM = 1000, PIE_QUICK = 600;
+    private static final float BAR_W = 0.4f;
+    private static final int BAR_ANIM = 800;
+
     private PieChart pieChart;
     private BarChart barChart;
     private TextView tvMonthLabel;
@@ -87,16 +98,16 @@ public class StatsFragment extends Fragment {
     private void setupPie() {
         pieChart.setUsePercentValues(true);
         pieChart.getDescription().setEnabled(false);
-        pieChart.setExtraOffsets(30, 10, 30, 10);
+        pieChart.setExtraOffsets(PIE_L, PIE_T, PIE_R, PIE_B);
         pieChart.setDrawHoleEnabled(true);
-        pieChart.setHoleRadius(50f);
-        pieChart.setTransparentCircleRadius(54f);
+        pieChart.setHoleRadius(HOLE_R);
+        pieChart.setTransparentCircleRadius(TRANS_R);
         pieChart.setHoleColor(Color.TRANSPARENT);
         pieChart.setCenterText("¥");
-        pieChart.setCenterTextSize(15f);
+        pieChart.setCenterTextSize(CENTER_SZ);
         pieChart.setCenterTextTypeface(Typeface.DEFAULT_BOLD);
         pieChart.setDrawEntryLabels(false);
-        pieChart.setMinOffset(40f);
+        pieChart.setMinOffset(MIN_OFF);
         pieChart.setRotationEnabled(false);
         pieChart.getLegend().setEnabled(false);
     }
@@ -150,7 +161,7 @@ public class StatsFragment extends Fragment {
                 Double v = grouped.get(order[i]);
                 if (v != null && v > 0) {
                     float percent = (float)(v / all * 100f);
-                    if (percent < 3f) {
+                    if (percent < MIN_PCT) {
                         grouped.put("其他",
                                 grouped.getOrDefault("其他", 0.0) + v);
                         continue;
@@ -168,8 +179,8 @@ public class StatsFragment extends Fragment {
             PieDataSet ds = new PieDataSet(entries, "");
 
             ds.setColors(colors);
-            ds.setValueTextSize(12f);
-            ds.setSliceSpace(3f);
+            ds.setValueTextSize(LABEL_SZ);
+            ds.setSliceSpace(SLICE_GAP);
 
 // 外部标签显示（引线）
             ds.setXValuePosition(PieDataSet.ValuePosition.OUTSIDE_SLICE);
@@ -177,16 +188,16 @@ public class StatsFragment extends Fragment {
 
 // 引线样式优化（防重叠关键）
             ds.setValueLineColor(0xFF999999);
-            ds.setValueLineWidth(1f);
-            ds.setValueLinePart1Length(0.7f);
-            ds.setValueLinePart2Length(0.5f);
+            ds.setValueLineWidth(LINE_W);
+            ds.setValueLinePart1Length(LINE_L1);
+            ds.setValueLinePart2Length(LINE_L2);
             ds.setValueLineVariableLength(true);
-            ds.setValueLinePart1OffsetPercentage(80f);
+            ds.setValueLinePart1OffsetPercentage(LINE_OFF);
 
 //  关键：控制“餐饮 25.50%”这种格式
 
             ds.setValueLineVariableLength(true);
-            ds.setValueLinePart1OffsetPercentage(80f);
+            ds.setValueLinePart1OffsetPercentage(LINE_OFF);
 
             PieData data = new PieData(ds);
 
@@ -199,7 +210,7 @@ public class StatsFragment extends Fragment {
             
             pieChart.setCenterText("¥ " + (int)all);
             pieChart.setData(data);
-            pieChart.post(() -> pieChart.animateY(firstLoad ? 1000 : 600, Easing.EaseInOutCubic));
+            pieChart.post(() -> pieChart.animateY(firstLoad ? PIE_ANIM : PIE_QUICK, Easing.EaseInOutCubic));
             firstLoad = false;
             pieChart.invalidate();
         });
@@ -227,10 +238,10 @@ public class StatsFragment extends Fragment {
             ds.setStackLabels(new String[]{"支出","收入"});
             ds.setDrawValues(false);
             BarData bd = new BarData(ds);
-            bd.setBarWidth(0.4f);
+            bd.setBarWidth(BAR_W);
             barChart.getXAxis().setValueFormatter(new IndexAxisValueFormatter(labels));
             barChart.setData(bd);
-            barChart.post(() -> barChart.animateY(800));
+            barChart.post(() -> barChart.animateY(BAR_ANIM));
             barChart.invalidate();
         }));
     }
