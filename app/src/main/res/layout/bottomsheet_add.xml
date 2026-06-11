@@ -41,8 +41,8 @@
             android:layout_width="48dp"
             android:layout_height="48dp"
             android:layout_marginStart="8dp"
-            android:text="📷"
-            android:textSize="20sp"
+            android:icon="@drawable/ic_ai_camera"
+            app:iconSize="32dp"
             style="@style/Widget.Material3.Button.IconButton" />
     </LinearLayout>
 
