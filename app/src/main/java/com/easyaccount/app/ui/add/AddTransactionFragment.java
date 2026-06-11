@@ -107,54 +107,8 @@ public class AddTransactionFragment extends Fragment {
     }
 
     private void showInputSheet(Category category) {
-        View v = LayoutInflater.from(requireContext()).inflate(R.layout.dialog_add_transaction, null);
-        EditText etAmount = v.findViewById(R.id.et_amount);
-        EditText etNote = v.findViewById(R.id.et_note);
-        TextView tvDate = v.findViewById(R.id.tv_date);
-        final long[] ms = {System.currentTimeMillis()};
-        tvDate.setText(sdf.format(new Date(ms[0])));
-        v.findViewById(R.id.rg_type).setVisibility(View.GONE);
-        v.findViewById(R.id.tv_category).setVisibility(View.GONE);
-        v.findViewById(R.id.hsv_tags).setVisibility(View.GONE);
-        v.findViewById(R.id.btn_ai_recognize).setVisibility(View.VISIBLE);
-        v.findViewById(R.id.btn_ai_recognize).setOnClickListener(bv -> {
-            if (AiConfig.API_KEY.equals("YOUR_ZHIPU_API_KEY_HERE")) {
-                Toast.makeText(requireContext(), "请先在 AiConfig.java 中填写 API Key", Toast.LENGTH_LONG).show();
-                return;
-            }
-            Intent pick = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-            imagePickerLauncher.launch(pick);
-        });
-
-        tvDate.setOnClickListener(dv -> {
-            Calendar cal = Calendar.getInstance();
-            cal.setTimeInMillis(ms[0]);
-            new DatePickerDialog(requireContext(), (p, y, m, d) -> {
-                Calendar s = Calendar.getInstance();
-                s.set(y, m, d, 0, 0, 0);
-                ms[0] = s.getTimeInMillis();
-                tvDate.setText(sdf.format(s.getTime()));
-            }, cal.get(Calendar.YEAR), cal.get(Calendar.MONTH), cal.get(Calendar.DAY_OF_MONTH)).show();
-        });
-
-        new AlertDialog.Builder(requireContext())
-                .setTitle(category.getName())
-                .setView(v)
-                .setPositiveButton("保存", (d, w) -> {
-                    String amt = etAmount.getText().toString().trim();
-                    if (amt.isEmpty()) { Toast.makeText(requireContext(), "请输入金额", Toast.LENGTH_SHORT).show(); return; }
-                    Transaction tx = new Transaction();
-                    tx.setAmount(Double.parseDouble(amt));
-                    tx.setType(selectedType);
-                    tx.setCategoryId(category.getId());
-                    tx.setNote(etNote.getText().toString().trim());
-                    tx.setDateMs(ms[0]);
-                    viewModel.insert(tx);
-                    viewModel.refreshMonthlyData();
-                    Toast.makeText(requireContext(), "已保存", Toast.LENGTH_SHORT).show();
-                })
-                .setNegativeButton("取消", null)
-                .show();
+        new AddBottomSheet(category, selectedType, viewModel)
+                .show(getParentFragmentManager(), "add_bottom_sheet");
     }
 
     private void recognizeBill(Uri uri) {

@@ -4,7 +4,12 @@
     android:height="108dp"
     android:viewportWidth="108"
     android:viewportHeight="108">
+    <!-- 柠檬身体 -->
     <path
-        android:fillColor="#FFFFFF"
-        android:pathData="M34,36h40v4H34zM34,46h40v4H34zM34,56h26v4H34z" />
+        android:fillColor="#FDD835"
+        android:pathData="M40,30 C20,30 15,55 25,70 C30,80 55,82 65,78 C85,72 90,50 80,34 C72,24 55,28 40,30Z" />
+    <!-- 叶子 -->
+    <path
+        android:fillColor="#8BC34A"
+        android:pathData="M55,28 C60,18 70,14 72,16 C70,20 62,24 55,28Z" />
 </vector>
