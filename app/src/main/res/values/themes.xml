@@ -6,7 +6,7 @@
         <item name="colorOnPrimary">@color/on_primary</item>
         <item name="colorSecondary">@color/secondary</item>
         <item name="colorOnSecondary">@color/on_primary</item>
-        <item name="android:colorBackground">@color/background</item>
+        <item name="android:colorBackground">#fdf914</item>
         <item name="colorSurface">@color/surface</item>
         <item name="colorOnSurface">@color/on_surface</item>
         <item name="colorError">@color/error</item>
