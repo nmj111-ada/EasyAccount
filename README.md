@@ -1,32 +1,82 @@
-# EasyAccount 记账 App
+# EasyAccount
 
-学生自学开发的记账应用，用于个人财务管理。
+EasyAccount 是一个个人记账项目，包含 Android 移动端、Web 管理端和 Spring Boot 数据同步服务，支持账目记录、分类统计、预算、周期记账和云同步。
 
-## 技术栈
+## 模块
 
-| 端 | 技术 |
-|---|---|
-| Android App | Java + Room + MPAndroidChart + MVVM |
-| 后端 | Spring Boot 3.2 + JPA + MySQL |
-| Web 前端 | React + TypeScript + Recharts + Vite |
-
-## 功能
-
-- 📝 记账（42个二级分类 + 7大类统计）
-- 📊 环形饼图 + 柱状图统计
-- 🔍 关键词/分类/日期搜索
-- 💰 月度预算管理
-- 🔁 周期记账（WorkManager 自动生成）
-- 🌙 深色模式
-- ☁️ 云同步
-- 🤖 AI 拍照记账（智谱 GLM-4V-Flash）
-- 🌐 Web 管理端
+| 模块 | 目录 | 技术 | 说明 |
+| --- | --- | --- | --- |
+| Android App | `app/` | Java, AndroidX, Room, MVVM | 本地记账与同步客户端 |
+| Web 管理端 | `web/` | React 18, TypeScript, Vite, Recharts | 浏览器账目与统计查看 |
+| 服务端 | `server/` | Spring Boot 3.2, JPA, MySQL | 数据同步和查询 API |
 
 ## 项目结构
 
+```text
+EasyAccount/
+├── app/                 Android 应用
+├── web/                 React Web 管理端
+├── server/              Spring Boot 服务端
+├── README.md
+└── .gitignore
 ```
-D:\
-├── account_app\        Android App
-├── account_server\     Spring Boot 后端
-└── account_web\        React Web 前端
+
+## 前置条件
+
+- JDK 17
+- Maven 3.9 或更高版本
+- Node.js 18 或更高版本和 npm
+- MySQL 8
+- Android Studio（构建 Android 应用时需要）
+
+## 启动服务端
+
+先确保 MySQL 可用。服务端默认会创建 `easy_account` 数据库，并通过环境变量读取连接信息：
+
+```powershell
+$env:DB_URL = 'jdbc:mysql://localhost:3306/easy_account?createDatabaseIfNotExist=true&useSSL=false&serverTimezone=Asia/Shanghai'
+$env:DB_USERNAME = 'root'
+$env:DB_PASSWORD = '<your-database-password>'
+```
+
+```powershell
+cd server
+mvn spring-boot:run
+```
+
+服务默认运行在 `http://localhost:8080`，API 路由以 `/api` 开头。配置示例见 `server/src/main/resources/application.example.yml`。
+
+## 启动 Web 管理端
+
+先启动服务端，再在另一个终端运行：
+
+```powershell
+cd web
+npm install
+npm run dev
+```
+
+Vite 会将 `/api` 请求代理至 `http://localhost:8080`。生产构建使用 `npm run build`。
+
+## 运行 Android 应用
+
+1. 使用 Android Studio 打开仓库根目录。
+2. 等待 Gradle 同步完成，选择设备或模拟器后运行 `app`。
+3. 真机同步时使用电脑的局域网 IP 或部署地址，不要使用 `localhost`。
+
+## AI 配置与安全
+
+- `AiConfig.java` 仅保留 AI Key 占位符，不提交真实 Key。
+- 不要将数据库密码、令牌或 API Key 提交到 Git。
+- Android 客户端内嵌的 Key 可以被提取；生产环境应通过服务端代理 AI 请求并使用密钥管理服务。
+- `.gitignore` 会排除环境文件、构建产物、依赖目录和常见密钥文件。
+
+## 常用验证命令
+
+```powershell
+cd web
+npm run build
+
+cd ../server
+mvn test package
 ```

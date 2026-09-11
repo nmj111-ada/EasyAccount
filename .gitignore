@@ -1,6 +1,6 @@
 *.iml
 .gradle
-/local.properties
+/app/local.properties
 /.idea
 /build
 /app/build
@@ -9,3 +9,23 @@
 .cxx
 *.apk
 *.aab
+
+# Web client
+/web/node_modules/
+/web/dist/
+
+# Spring Boot server
+/server/target/
+/server/.mvn/
+/server/.idea/
+*.iml
+
+# Local configuration and credentials
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.p12
+*.pfx
+*.jks

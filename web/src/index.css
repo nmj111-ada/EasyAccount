@@ -1,0 +1,20 @@
+:root { --primary: #FDD835; --primary-variant: #F9A825; --secondary: #8BC34A; --bg: #FFFDE7; --surface: #fff; --text: #212121; --text2: #757575; --expense: #F44336; --income: #4CAF50; }
+body { margin:0; font-family: -apple-system, "Microsoft YaHei", sans-serif; background: var(--bg); color: var(--text); }
+.app { max-width: 900px; margin: 0 auto; padding: 16px; }
+.header { display:flex; align-items:center; gap:12px; padding:16px 0; }
+.header h1 { flex:1; font-size:24px; color: var(--primary); -webkit-text-stroke: 1px var(--primary-variant); }
+.tabs { display:flex; gap:0; border-bottom:2px solid #eee; margin-bottom:20px; }
+.tabs button { flex:1; padding:12px; border:none; background:none; font-size:15px; cursor:pointer; color: var(--text2); }
+.tabs button.active { color: var(--primary-variant); border-bottom:2px solid var(--primary-variant); margin-bottom:-2px; font-weight:bold; }
+.card { background: var(--surface); border-radius:12px; padding:20px; margin-bottom:16px; box-shadow: 0 2px 8px rgba(0,0,0,.06); }
+.card h2 { font-size:16px; color: var(--text2); margin:0 0 8px; }
+.card .amount { font-size:32px; font-weight:bold; }
+.card .row { display:flex; gap:16px; margin-top:8px; }
+.card .label { font-size:12px; color: var(--text2); }
+.card .val { font-size:16px; font-weight:bold; }
+.expense { color: var(--expense); }
+.income { color: var(--income); }
+table { width:100%; border-collapse:collapse; }
+th, td { padding:10px 12px; text-align:left; border-bottom:1px solid #eee; }
+th { color: var(--text2); font-size:12px; }
+.loading { text-align:center; padding:40px; color: var(--text2); }

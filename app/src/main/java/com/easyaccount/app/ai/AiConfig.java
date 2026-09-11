@@ -6,7 +6,7 @@ package com.easyaccount.app.ai;
  * 申请地址：https://open.bigmodel.cn/usercenter/apikeys
  */
 public class AiConfig {
-    public static final String API_KEY = "330bd1851d334bc8909f93ecccf4bdcc.yxvoXX8VT4FaUxTB";
+    public static final String API_KEY = "YOUR_ZHIPU_API_KEY_HERE";
 
     // GLM-4V-Flash 模型名称（免费）
     public static final String MODEL = "glm-4v-flash";
